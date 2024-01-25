@@ -16,15 +16,6 @@
   align-items: center;
 }
 
-.modal {
-  width: 80%;
-  height: 100%;
-  border-radius: 10px;
-  border: 2px solid #009540;
-  margin-top: 2%;
-  background-color: #D9D900;
-}
-
 .spinner {
   border: 4px solid #EE7D00;
   width: 56px;

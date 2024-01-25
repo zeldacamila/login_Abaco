@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react'
 import GoogleLogin from '@leecheuk/react-google-login'
 import { gapi } from 'gapi-script'
 import { Modal } from 'antd';
-import { ExclamationCircleOutlined } from '@ant-design/icons';
 
 const clientId = import.meta.env.VITE_CLIENT_ID;
 
