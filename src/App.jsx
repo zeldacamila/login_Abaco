@@ -1,5 +1,5 @@
 import './App.css'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import GoogleLogin from '@leecheuk/react-google-login'
 import { gapi } from 'gapi-script'
 
@@ -18,9 +18,11 @@ function App() {
     gapi.load('client:auth2', start);
   }, []);
 
+  const [isLoading, setIsLoading] = useState(false);
   const onSuccess = (res) => {
-    console.log('login ok with the email', res.profileObj.email);
-
+    // Inicia la animación del loading
+    setIsLoading(true);
+    // Petición a 'API' para leer url a la que debe redireccionar según el correo
     fetch('https://script.google.com/macros/s/AKfycbybvg2o-3fwCyT52Ozme1U-FCNQDh5RbFO6_9POTe7PMEBX7y77AjYo9CniFjQCmRjC0w/exec', {
       method: 'POST',
       headers: {
@@ -30,13 +32,13 @@ function App() {
     })
     .then(response => response.json())
     .then(data => {
-      console.log('Success:', data);
       if (data && data.redireccion) {
         window.location.href = data.redireccion; // Redirige al usuario a la URL
       }
+      setIsLoading(false)
     })
     .catch((error) => {
-      console.error('Error:', error);
+      setIsLoading(false)
     });
   };
   
@@ -49,15 +51,20 @@ function App() {
       <div>
           <img src="https://cafa.iphiview.com/cafa/API/Organizations/GetLogo?partyId=306219" className="logo" alt="Abaco logo" />
       </div>
-      <h2>Bienvenido a Sir Abaco</h2>
+      <h1>Bienvenido a Sir Abaco</h1>
       <div className="login-button">
-        <GoogleLogin
+        {isLoading? (
+          <div className="spinner"></div>
+        ): (
+          <GoogleLogin
           clientId={clientId}
           buttonText='Iniciar sesión'
           onSuccess={onSuccess}
           onFailure={onFailure}
           cookiePolicy={'single_host_origin'}
+          // isSignedIn={true}
         />
+        )}
       </div>
     </>
   )

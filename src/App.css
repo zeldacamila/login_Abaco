@@ -8,10 +8,27 @@
 .logo {
   height: 8em;
   padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
 }
 
-.card {
-  padding: 2em;
+.login-button {
+  display: flex;
+  align-content: center;
+}
+
+.spinner {
+  border: 4px solid #EE7D00;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border-left-color: #009540;
+  animation: spin 1s ease infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
