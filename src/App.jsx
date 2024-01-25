@@ -2,6 +2,7 @@ import './App.css'
 import { useEffect, useState } from 'react'
 import GoogleLogin from '@leecheuk/react-google-login'
 import { gapi } from 'gapi-script'
+import { Button, Modal } from 'antd';
 
 const clientId = import.meta.env.VITE_CLIENT_ID;
 
@@ -19,6 +20,14 @@ function App() {
   }, []);
 
   const [isLoading, setIsLoading] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [email, setEmail] = useState('');
+  const handleClose = () => {
+    setIsModalOpen(false);
+  };
+  const [data, setData] = useState('');
+
+
   const onSuccess = (res) => {
     // Inicia la animación del loading
     setIsLoading(true);
@@ -32,12 +41,19 @@ function App() {
     })
     .then(response => response.json())
     .then(data => {
+      setData(data.status)
       if (data && data.redireccion) {
         window.location.href = data.redireccion; // Redirige al usuario a la URL
+        setIsLoading(false)
+      } else {
+        
+        setEmail(res.profileObj.email);
+        setIsModalOpen(true);
       }
       setIsLoading(false)
     })
     .catch((error) => {
+      console.log(error)
       setIsLoading(false)
     });
   };
@@ -53,6 +69,9 @@ function App() {
       </div>
       <h1>Bienvenido a Sir Abaco</h1>
       <div className="login-button">
+        <Modal title={data} open={isModalOpen} onOk={handleClose}>
+          <p>{email}</p>
+        </Modal>
         {isLoading? (
           <div className="spinner"></div>
         ): (
@@ -66,6 +85,7 @@ function App() {
         />
         )}
       </div>
+      
     </>
   )
 }

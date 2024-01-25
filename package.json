@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@leecheuk/react-google-login": "^5.4.1",
+    "antd": "^5.13.2",
     "gapi-script": "^1.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
